@@ -1,0 +1,60 @@
+.suggestions{
+    width: 320px;
+}
+.suggestionTop{
+    display: flex;
+    column-gap: 1rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+.currentUserImg{
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.suggestionUserName{
+    display: flex;
+    flex-direction: column;
+}
+.suggestions .suggestionTitle{
+    display: flex;
+    justify-content: space-between;
+}
+.suggestionTitle h3{
+    color: gray;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.suggestionTitle a{
+    font-weight: 500;
+}
+.suggestedImg{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.bottom{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bottomLeft{
+    display: flex;
+    align-items: center;
+    column-gap: .75rem;
+}
+.bottom .username{
+    font-size: .9rem;
+}
+.bottom .fullName{
+    margin-top: .25rem;
+    font-size: .9rem;
+}
+.bottom button{
+    color: #0F9BF6;
+    font-weight: bold;
+    font-size: .9rem;
+}

@@ -1,0 +1,183 @@
+.profileContainer {
+  padding-top: 100px;
+  max-width: 968px;
+  margin: 0 auto;
+  padding-left: 2.5rem;
+}
+
+.profileTop {
+  display: flex;
+  column-gap: 0.75rem;
+  align-items: center;
+  margin: 1.25rem 0;
+}
+.fullname {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+.editProfile {
+  padding: 0.5rem;
+  border: 1px solid rgba(128, 128, 128, 0.527);
+  border-radius: 5px;
+}
+.userAct {
+  display: flex;
+  column-gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+.profilImgContainer{
+  float: left;
+  margin-right: 2rem;
+  width: 180px;
+  height: 180px;
+  position: relative;
+}
+.progress {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.profileUserImg {
+  border-radius: 50%;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profileUsername {
+  font-weight: bold;
+}
+.followers,
+.followings {
+  cursor: pointer;
+}
+.userAct span {
+  font-weight: bolder;
+  font-size: 1.1rem;
+}
+.userAct p {
+  font-size: 1.1rem;
+  color: rgba(0, 0, 0, 0.863);
+}
+.profileUsername {
+  font-size: 1.8rem;
+  font-weight: 300;
+}
+
+.profileFullname {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.postImages {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+  padding: 0 0 2.5rem;
+  max-width: 1024px;
+  margin: 3rem auto 0;
+}
+.profilePostImg {
+  width: 100%;
+  height: 275px;
+  object-fit: cover;
+}
+.profileFollowBtn{
+  background: #0095F6;
+  color: #fff;
+  padding: .5rem 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+@media screen and (max-width: 768px) {
+  .userAct {
+    clear: both;
+    margin-bottom: 0;
+  }
+  .postImages{
+    margin: 0;
+  }
+  .profileContainer{
+    padding-left: 0;
+  }
+  .profileTop {
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+    padding-left: 2rem;
+  }
+  .profileUsername {
+    margin-top: 2rem;
+  }
+
+  .profilImgContainer {
+    width: 100px;
+    height: 100px;
+    margin-left: 2rem;
+    margin-right: 0;
+  }
+  .profileUserImg {
+    width: 100%;
+    height: 100%;
+  }
+  .profileBottom {
+    display: flex;
+    flex-direction: column-reverse;
+    padding-top: 1rem;
+    width: 100vw;
+  }
+  .profileFullname {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    padding-left: 2.5rem;
+  }
+  .editProfile {
+    width: 150px;
+  }
+  .userAct {
+    border-top: 1px solid rgba(128, 128, 128, 0.24);
+    border-bottom: 1px solid rgba(128, 128, 128, 0.24);
+    padding: 0.75rem 0;
+    justify-content: space-between;
+  }
+  .userAct:nth-child(1) {
+    padding-left: 2.5rem;
+  }
+  .followings {
+    padding-right: 2.5rem;
+  }
+  .userAct span {
+    display: block;
+    text-align: center;
+  }
+  .profilePostImg{
+    height: 200px;
+  }
+}
+@media screen and (min-width:824px) {
+  .postImages{
+    padding: 0 2.5rem 2.5rem;
+    gap: 2rem;
+  }
+}
+@media screen and (max-width:420px){
+  .profilePostImg{
+    height: 150px;
+  }
+  .userAct{
+    column-gap: .3rem;
+  }
+}
+@media screen and (max-width:320px) {
+  .editProfile{
+    width: max-content;
+    font-size: .8rem;
+  }
+  .profilePostImg{
+    height: 100px;
+  }
+  
+}

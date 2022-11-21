@@ -1,0 +1,77 @@
+.createPost{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(8, 8, 8, 0.555);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    cursor: auto;
+}
+.createPost *{
+    cursor: auto;
+}
+.modifyPostContainer{
+    width: 400px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    padding-bottom: 2rem;
+}
+.createPostTitle{
+    text-align: center;
+    color: rgba(0, 0, 0, 0.849);
+    border-bottom: 1px solid rgba(128, 128, 128, 0.274);
+    width: 100%;
+    padding: 1rem 0;
+}
+.createPostContainer svg{
+    margin-top: 5rem;
+}
+.createPostText{
+    margin: 1.25rem 0 ;
+    font-size: 1.25rem;
+    font-weight: 300;
+}
+.chooseFile{
+    color: #fff;
+    background: #0095F6;
+    padding: .75rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.closeIcon{
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    color: #fff;
+    cursor: pointer;
+}
+.fileChoosen{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+}
+.legendInput{
+    border: 1px solid rgba(128, 128, 128, 0.521);
+    width: 90%;
+    padding: 1rem;
+    margin-bottom: .75rem;
+}
+.shareBtn{
+    background: #0095F6;
+    padding: .5rem 1rem;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.createPostContainer progress{
+    width: 90%;
+    margin-bottom: .75rem;
+}

@@ -1,0 +1,11 @@
+.homeContainer{
+    display: flex;
+    justify-content: center;
+    margin-top: 6rem;
+    column-gap: 2.5rem;
+}
+@media screen and (max-width:968px){
+    .homeContainer .suggestions{
+        display: none;
+    }
+}

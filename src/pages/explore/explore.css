@@ -1,0 +1,28 @@
+.explore{
+    padding-top: 8rem;
+    max-width: 640px;
+    margin: 0 auto 4rem;
+}
+.suggestionList{
+    background: #fff;
+    width: 100%;
+}
+.exploreTitle{
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+}
+.suggestionListWrapper{
+    padding:  1rem;
+}
+.suggestionList button{
+    background: #0F9BF6;
+    color: #fff;
+    padding: .5rem 1rem;
+    border-radius: 5px;
+}
+.explore .unFollowBtn{
+    background: none;
+    color: #000;
+}

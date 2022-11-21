@@ -1,0 +1,8 @@
+.notFound{
+    text-align: center;
+    text-transform: uppercase;
+    padding-top: 6rem;
+}
+.notFound h1{
+    font-size: 1.4rem;
+}
