@@ -1,4 +1,4 @@
-import React, { createRef, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { currentUser } from "../../context/AuthContext";
 import {
@@ -18,23 +18,23 @@ import Comments from "../comment/Comments";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import PostSettings from "../postSettings/PostSettings";
+import FollowUser from "../followUser/FollowUser";
 
 const Post = ({ post }) => {
   const { username, imageURL, likes, id, legend, date, photoURL } = post;
 
-  const { user, userInfo } = useContext(currentUser);
+  const { userInfo } = useContext(currentUser);
   const [userLike, setUserLike] = useState(false);
-  const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [isFollowed, setIsFollowed] = useState(false);
-  const inputRef = createRef()
+  const inputRef = useRef();
   useEffect(() => {
-    setUserLike(likes.includes(user.uid));
-  }, [likes, user.uid]);
+    setUserLike(likes.includes(userInfo.uid));
+  }, [likes, userInfo.uid]);
   useEffect(() => {
     setIsFollowed(userInfo?.followings.includes(post.uid));
   }, [userInfo?.followings, post?.uid]);
-  
+
   useEffect(() => {
     const getComments = async () => {
       const commentCollection = collection(
@@ -55,26 +55,31 @@ const Post = ({ post }) => {
     setUserLike(!userLike);
     const docRef = doc(bdd, "userPosts", id);
     await updateDoc(docRef, {
-      likes: userLike ? arrayRemove(user.uid) : arrayUnion(user.uid),
+      likes: userLike ? arrayRemove(userInfo.uid) : arrayUnion(userInfo.uid),
     });
   };
 
   const handleComment = async (e) => {
     e.preventDefault();
-    const commentCollection = collection(
-      bdd,
-      "userPosts/" + id + "/userComments"
-    );
-    const commentDoc = {
-      comment,
-      username: user.displayName,
-      uid: user.uid,
-      photoURL: user.photoURL,
-      date: serverTimestamp(),
-      likes: [],
-    };
-    await addDoc(commentCollection, commentDoc);
-    setComment("");
+    const text = e.target[0].value;
+
+    if (text) {
+      const commentCollection = collection(
+        bdd,
+        "userPosts/" + id + "/userComments"
+      );
+      const commentDoc = {
+        comment: text,
+        username: userInfo.username,
+        uid: userInfo.uid,
+        photoURL: userInfo.photoURL,
+        date: serverTimestamp(),
+        likes: [],
+      };
+      await addDoc(commentCollection, commentDoc);
+      
+    }
+    inputRef.current.value = "";
   };
 
   return (
@@ -139,7 +144,7 @@ const Post = ({ post }) => {
               )}
             </span>
 
-            <span onClick={()=>inputRef.current.focus()}>
+            <span onClick={() => inputRef.current.focus()}>
               <svg
                 aria-label="Commenter"
                 class="_ab6-"
@@ -189,10 +194,7 @@ const Post = ({ post }) => {
             <path d="M15.83 10.997a1.167 1.167 0 1 0 1.167 1.167 1.167 1.167 0 0 0-1.167-1.167Zm-6.5 1.167a1.167 1.167 0 1 0-1.166 1.167 1.167 1.167 0 0 0 1.166-1.167Zm5.163 3.24a3.406 3.406 0 0 1-4.982.007 1 1 0 1 0-1.557 1.256 5.397 5.397 0 0 0 8.09 0 1 1 0 0 0-1.55-1.263ZM12 .503a11.5 11.5 0 1 0 11.5 11.5A11.513 11.513 0 0 0 12 .503Zm0 21a9.5 9.5 0 1 1 9.5-9.5 9.51 9.51 0 0 1-9.5 9.5Z"></path>
           </svg>
           <input
-            type="textarea"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            required
+            type="text"
             placeholder="Ajouter un commentaire"
             ref={inputRef}
           />
@@ -204,32 +206,3 @@ const Post = ({ post }) => {
 };
 
 export default Post;
-
-const FollowUser = ({ post, isFollowed, setIsFollowed }) => {
-  const { user } = useContext(currentUser);
-
-  const handleFollow = async () => {
-    setIsFollowed(true);
-    await updateDoc(doc(bdd, "users", user.uid), {
-      followings: arrayUnion(post.uid),
-    });
-    await updateDoc(doc(bdd, "users", post.uid), {
-      followers: arrayUnion(user.uid),
-    });
-  };
-  if (user.uid === post.uid) {
-    return null;
-  }
-  if (isFollowed) {
-    return null;
-  }
-
-  return (
-    <>
-      <span className="dot"></span>
-      <button className="followBtn" onClick={handleFollow}>
-        Suivre
-      </button>
-    </>
-  );
-};

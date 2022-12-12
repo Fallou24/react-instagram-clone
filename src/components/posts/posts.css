@@ -82,6 +82,7 @@
 }
 .commentInput input{
   flex: 1;
+  font-size: .9rem;
 }
 .commentSubmitBtn {
   color: #0095f6;

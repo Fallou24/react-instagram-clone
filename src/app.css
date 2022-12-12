@@ -9,7 +9,7 @@ input {
   padding: 0;
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 body {
   background: rgba(204, 204, 204, 0.151);
@@ -23,4 +23,9 @@ ul {
 button {
   cursor: pointer;
   background: transparent;
+}
+@media screen and (min-width: 768px) {
+  * {
+    font-size: 1rem;
+  }
 }
