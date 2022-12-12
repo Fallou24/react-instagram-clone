@@ -3,24 +3,21 @@ import "./userFollowers.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { bdd } from "../../firebase-config";
 import {
-  arrayRemove,
-  arrayUnion,
   collection,
-  doc,
-  getDoc,
   getDocs,
   onSnapshot,
   query,
-  updateDoc,
   where,
 } from "firebase/firestore";
 import { currentUser } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
+import { handleUnFollow } from "../../modules/unFollowUser";
+import { handleFollow } from "../../modules/followUser";
 
 const UserFollowers = ({ setCloseModal, username }) => {
   const [followerList, setFollowerList] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
-  const {userInfo:current} = useContext(currentUser)
+  const { userInfo: current } = useContext(currentUser);
   useEffect(() => {
     const getUser = async () => {
       const userCollection = collection(bdd, "users");
@@ -45,24 +42,7 @@ const UserFollowers = ({ setCloseModal, username }) => {
       }
     };
     getFollowersInfo();
-  }, [userInfo?.followers]);
-  const handleFollow = async (id) => {
-    await updateDoc(doc(bdd, "users", current.uid), {
-      followings: arrayUnion(id),
-    });
-    await updateDoc(doc(bdd, "users", id), {
-      followers: arrayUnion(current.uid),
-    });
-  };
-  const handleUnFollow = async (id) => {
-    await updateDoc(doc(bdd, "users", current.uid), {
-      followings: arrayRemove(id),
-    });
-    await updateDoc(doc(bdd, "users", id), {
-      followers: arrayRemove(current.uid),
-    });
-  };
-  
+  }, [userInfo.followers]);
 
   return (
     <div className="createPost" onClick={() => setCloseModal(false)}>
@@ -74,12 +54,14 @@ const UserFollowers = ({ setCloseModal, username }) => {
             return (
               <div className="userFollowersCon" key={follower.uid}>
                 <div className="followerLeft">
-                  <Link to={"/profile/"+username} onClick={()=>setCloseModal(false)}>
+                  <Link
+                    to={"/profile/" + username}
+                    onClick={() => setCloseModal(false)}
+                  >
                     <img
                       src={photoURL || "/images/noAvatar.png"}
                       className="followerImg"
                       alt=""
-                      
                     />
                   </Link>
                   <p className="followerName">
@@ -87,15 +69,27 @@ const UserFollowers = ({ setCloseModal, username }) => {
                     <span>{fullName}</span>
                   </p>
                 </div>
-                {current.uid !== follower.uid && 
-                <p>
-                  {current.followings.includes(follower.uid) ? (
-                    <button className="unFollowBtn" onClick={()=>handleUnFollow(follower.uid)}>Suivi(e)</button>
-                  ) : (
-                    <button className="profileFollowBtn" onClick={()=>handleFollow(follower.uid)}>Suivre</button>
-                  )}
-                </p>
-                }
+                {current.uid !== follower.uid && (
+                  <p>
+                    {current.followings.includes(follower.uid) ? (
+                      <button
+                        className="unFollowBtn"
+                        onClick={() =>
+                          handleUnFollow(current.uid, follower.uid)
+                        }
+                      >
+                        Suivi(e)
+                      </button>
+                    ) : (
+                      <button
+                        className="profileFollowBtn"
+                        onClick={() => handleFollow(current.uid, follower.uid)}
+                      >
+                        Suivre
+                      </button>
+                    )}
+                  </p>
+                )}
               </div>
             );
           })}

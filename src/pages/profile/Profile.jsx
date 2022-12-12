@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Topbar from "../../components/topbar/Topbar";
 import {
-  arrayRemove,
-  arrayUnion,
   collection,
   doc,
   getDocs,
@@ -19,16 +17,16 @@ import { useParams } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
 import { currentUser } from "../../context/AuthContext";
 import { CircularProgress } from "@mui/material";
-import { createRef } from "react";
 import UserFollowers from "../../components/userFollowers/UserFollowers";
 import UserFollowings from "../../components/userFollowings/userFollowings";
+import { handleUnFollow } from "../../modules/unFollowUser";
+import { handleFollow } from "../../modules/followUser";
 
 const Profile = () => {
   const { username } = useParams();
   const [userInfo, setUserInfo] = useState({});
   const [userPosts, setUserPosts] = useState([]);
   const [progress, setProgress] = useState(false);
-  const profilPic = createRef();
   const [followerModal, setFollowerModal] = useState(false);
   const [followingModal, setFollowingModal] = useState(false);
   const {
@@ -39,10 +37,7 @@ const Profile = () => {
     followings,
   } = userInfo;
   const { user, userInfo: current } = useContext(currentUser);
-  const [isFollowed, setIsFollowed] = useState(false);
-  useEffect(() => {
-    setIsFollowed(current.followings.includes(userInfo.uid));
-  }, [userInfo.uid, current.followings]);
+
   useEffect(() => {
     const getUser = async () => {
       const userCollection = collection(bdd, "users");
@@ -97,24 +92,7 @@ const Profile = () => {
       }
     );
   };
-  const handleFollow = async () => {
-    setIsFollowed(true);
-    await updateDoc(doc(bdd, "users", user.uid), {
-      followings: arrayUnion(userInfo.uid),
-    });
-    await updateDoc(doc(bdd, "users", userInfo.uid), {
-      followers: arrayUnion(user.uid),
-    });
-  };
-  const handleUnFollow = async () => {
-    setIsFollowed(false);
-    await updateDoc(doc(bdd, "users", user.uid), {
-      followings: arrayRemove(userInfo.uid),
-    });
-    await updateDoc(doc(bdd, "users", userInfo.uid), {
-      followers: arrayRemove(user.uid),
-    });
-  };
+
   return (
     <>
       <Topbar />
@@ -161,12 +139,18 @@ const Profile = () => {
           <span className="profileUsername">{name}</span>
           {current.username !== username && (
             <>
-              {isFollowed ? (
-                <button className="profileFollowBtn" onClick={handleUnFollow}>
+              {current.followings.includes(userInfo.uid) ? (
+                <button
+                  className="profileFollowBtn"
+                  onClick={() => handleUnFollow(current.uid, userInfo.uid)}
+                >
                   Ne plus suivre
                 </button>
               ) : (
-                <button className="profileFollowBtn" onClick={handleFollow}>
+                <button
+                  className="profileFollowBtn"
+                  onClick={() => handleFollow(current.uid, userInfo.uid)}
+                >
                   Suivre
                 </button>
               )}

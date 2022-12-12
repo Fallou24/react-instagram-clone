@@ -13,6 +13,8 @@ import { Link } from "react-router-dom";
 import Topbar from "../../components/topbar/Topbar";
 import { currentUser } from "../../context/AuthContext";
 import { bdd } from "../../firebase-config";
+import { handleFollow } from "../../modules/followUser";
+import { handleUnFollow } from "../../modules/unFollowUser";
 import "./explore.css";
 
 const Explore = () => {
@@ -33,23 +35,6 @@ const Explore = () => {
     };
     getFollowersInfo();
   }, []);
-  const handleFollow = async (id) => {
-    await updateDoc(doc(bdd, "users", userInfo.uid), {
-      followings: arrayUnion(id),
-    });
-    await updateDoc(doc(bdd, "users", id), {
-      followers: arrayUnion(userInfo.uid),
-    });
-  };
-
-  const handleUnFollow = async (id) => {
-    await updateDoc(doc(bdd, "users", userInfo.uid), {
-      followings: arrayRemove(id),
-    });
-    await updateDoc(doc(bdd, "users", id), {
-      followers: arrayRemove(userInfo.uid),
-    });
-  };
 
   return (
     <>
@@ -79,12 +64,12 @@ const Explore = () => {
                       {userInfo.followings.includes(user.uid) ? (
                         <button
                           className="unFollowBtn"
-                          onClick={() => handleUnFollow(user.uid)}
+                          onClick={() => handleUnFollow(userInfo.uid ,user.uid)}
                         >
                           Suivi(e)
                         </button>
                       ) : (
-                        <button onClick={() => handleFollow(user.uid)}>
+                        <button onClick={() => handleFollow(userInfo.uid,user.uid)}>
                           Suivre
                         </button>
                       )}

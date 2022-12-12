@@ -4,17 +4,15 @@ import { currentUser } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
-  arrayRemove,
-  arrayUnion,
   collection,
-  doc,
   limit,
   onSnapshot,
   query,
-  updateDoc,
   where,
 } from "firebase/firestore";
 import { bdd } from "../../firebase-config";
+import { handleFollow } from "../../modules/followUser";
+import { handleUnFollow } from "../../modules/unFollowUser";
 
 const Suggestions = () => {
   const { userInfo } = useContext(currentUser);
@@ -34,23 +32,6 @@ const Suggestions = () => {
     };
     getFollowersInfo();
   }, [userInfo?.uid]);
-
-  const handleFollow = async (id) => {
-    await updateDoc(doc(bdd, "users", userInfo.uid), {
-      followings: arrayUnion(id),
-    });
-    await updateDoc(doc(bdd, "users", id), {
-      followers: arrayUnion(userInfo.uid),
-    });
-  };
-  const handleUnFollow = async (id) => {
-    await updateDoc(doc(bdd, "users", userInfo.uid), {
-      followings: arrayRemove(id),
-    });
-    await updateDoc(doc(bdd, "users", id), {
-      followers: arrayRemove(userInfo.uid),
-    });
-  };
 
   return (
     <div className="suggestions">
@@ -94,12 +75,14 @@ const Suggestions = () => {
                     {userInfo.followings.includes(user.uid) ? (
                       <button
                         style={{ color: "#000" }}
-                        onClick={() => handleUnFollow(user.uid)}
+                        onClick={() => handleUnFollow(userInfo.uid, user.uid)}
                       >
                         Suivi(e)
                       </button>
                     ) : (
-                      <button onClick={() => handleFollow(user.uid)}>
+                      <button
+                        onClick={() => handleFollow(userInfo?.uid, user.uid)}
+                      >
                         Suivre
                       </button>
                     )}
