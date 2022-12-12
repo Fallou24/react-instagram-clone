@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Register from "./pages/register/Register";
 import "./app.css";
@@ -9,6 +9,11 @@ import { currentUser } from "./context/AuthContext";
 import Profile from "./pages/profile/Profile";
 import Explore from "./pages/explore/Explore";
 import Chat from "./pages/chat/Chat";
+
+const Protected = ({ children }) => {
+  const { user } = useContext(currentUser);
+  return user ? children : <Navigate to="/" />;
+};
 
 const App = () => {
   const { user } = useContext(currentUser);
@@ -23,15 +28,27 @@ const App = () => {
           />
           <Route
             path="/profile/:username"
-            element={user ? <Profile /> : <Navigate to="/" />}
+            element={
+              <Protected>
+                <Profile />
+              </Protected>
+            }
           />
           <Route
             path="/explore/people"
-            element={user ? <Explore /> : <Navigate to="/" />}
+            element={
+              <Protected>
+                <Explore />
+              </Protected>
+            }
           />
           <Route
             path="/messages"
-            element={user ? <Chat /> : <Navigate to="/" />}
+            element={
+              <Protected>
+                <Chat />
+              </Protected>
+            }
           />
           <Route path="*" element={<NotFound />} />
         </Routes>
