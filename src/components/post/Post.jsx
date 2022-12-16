@@ -32,8 +32,8 @@ const Post = ({ post }) => {
     setUserLike(likes.includes(userInfo.uid));
   }, [likes, userInfo.uid]);
   useEffect(() => {
-    setIsFollowed(userInfo?.followings.includes(post.uid));
-  }, [userInfo?.followings, post?.uid]);
+    setIsFollowed(userInfo.followings?.includes(post.uid));
+  }, [userInfo.followings, post.uid]);
 
   useEffect(() => {
     const getComments = async () => {
