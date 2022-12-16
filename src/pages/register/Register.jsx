@@ -7,14 +7,11 @@ import { auth, bdd } from "../../firebase-config";
 import {
   collection,
   doc,
-  getDoc,
   getDocs,
-  onSnapshot,
   query,
   setDoc,
   where,
 } from "firebase/firestore";
-import { useEffect } from "react";
 
 const Register = () => {
   const [email, setEmail] = useState("");

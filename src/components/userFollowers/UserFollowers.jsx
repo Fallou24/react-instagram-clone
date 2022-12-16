@@ -42,7 +42,7 @@ const UserFollowers = ({ setCloseModal, username }) => {
       }
     };
     getFollowersInfo();
-  }, [userInfo.followers]);
+  }, [userInfo?.followers]);
 
   return (
     <div className="createPost" onClick={() => setCloseModal(false)}>

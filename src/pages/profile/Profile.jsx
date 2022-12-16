@@ -47,6 +47,10 @@ const Profile = () => {
         setUserInfo(item.data());
       });
     };
+
+    getUser();
+  }, [username,userInfo.followers,userInfo.followings]);
+  useEffect(() => {
     const getPost = async () => {
       const postCollection = collection(bdd, "userPosts");
       const q = query(postCollection, where("username", "==", username));
@@ -56,9 +60,8 @@ const Profile = () => {
         );
       });
     };
-    getUser();
     getPost();
-  }, [username, current.followings, current.followers]);
+  },[username]);
 
   const handleUpload = async (e) => {
     const file = e.target.files[0];
