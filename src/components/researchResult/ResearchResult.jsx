@@ -25,7 +25,7 @@ const ResearchResult = () => {
       });
     };
     getUser();
-  }, [userInfo.username]);
+  }, [userInfo?.username]);
   useEffect(() => {
     const handler = (e) => {
       if (
