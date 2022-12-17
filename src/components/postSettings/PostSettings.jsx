@@ -18,9 +18,9 @@ const PostSettings = ({ post, setIsFollowed, isFollowed }) => {
         setModifyPost(false);
       }
     };
-    document.body.addEventListener("click", handler, true);
+    document.addEventListener("mousedown", handler);
     return () => {
-      document.body.removeEventListener("click", handler, true);
+      document.removeEventListener("mousedown", handler);
     };
   });
 
@@ -42,7 +42,7 @@ const PostSettings = ({ post, setIsFollowed, isFollowed }) => {
     <>
       <div className="postSetContainer">
       
-        <MoreVertIcon onClick={() => setModifyPost(true)} />
+        <MoreVertIcon onClick={() => setModifyPost(!modifyPost)} />
         {modifyPost && (
           <>
             {post.uid === user.uid ? (

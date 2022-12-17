@@ -13,14 +13,13 @@
   padding: 0.75rem 1rem;
   background-color: #fff;
 }
-.postTop * {
-  cursor: pointer;
-}
+
 .singlePost {
   border: 1px solid rgba(128, 128, 128, 0.308);
   margin-bottom: 2rem;
   border-radius: 10px;
   background: #fff;
+  overflow: hidden;
 }
 .postUserInfo {
   display: flex;

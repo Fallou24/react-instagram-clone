@@ -18,14 +18,14 @@ const ResearchResult = () => {
     const getUser = async () => {
       const q = query(
         collection(bdd, "users"),
-        where("username", "!=", userInfo?.username)
+        where("username", "!=", userInfo.username)
       );
       onSnapshot(q, (snapshot) => {
         setUsers(snapshot.docs.map((doc) => ({ ...doc.data() })));
       });
     };
     getUser();
-  }, [userInfo?.username]);
+  }, [userInfo.username]);
   useEffect(() => {
     const handler = (e) => {
       if (
@@ -36,9 +36,9 @@ const ResearchResult = () => {
       }
     };
 
-    document.addEventListener("click", handler, true);
+    document.addEventListener("mousedown", handler);
     return () => {
-      document.removeEventListener("click", handler, true);
+      document.removeEventListener("mousedown", handler);
     };
   });
   return (
@@ -70,9 +70,9 @@ const ResearchResult = () => {
                     to={"/profile/" + username}
                     className="searchResultItem"
                     key={uid}
-                    onClick={()=>{
-                      setFindResult(false)
-                      setSearchTerm("")
+                    onClick={() => {
+                      setFindResult(false);
+                      setSearchTerm("");
                     }}
                   >
                     <p>
