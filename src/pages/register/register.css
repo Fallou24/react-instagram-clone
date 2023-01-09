@@ -86,3 +86,6 @@
 .registerBottom a{
     color: #0095F6;
 }
+.passwordBtn{
+    cursor: pointer;
+}

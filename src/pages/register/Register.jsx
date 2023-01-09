@@ -95,7 +95,7 @@ const Register = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Numero de telephone ou email"
+              placeholder="Email"
               required
             />
             <br />
@@ -124,12 +124,12 @@ const Register = () => {
                 onKeyDown={() => setBtnVisible(true)}
               />
               {btnVisible && password && (
-                <button
+                <span
                   className="passwordBtn"
                   onClick={() => setIsVisible((t) => !t)}
                 >
                   {isVisible ? "Masquer" : "Afficher"}
-                </button>
+                </span>
               )}
             </div>
             <br />
